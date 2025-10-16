@@ -294,7 +294,7 @@ export function SwapToken({
       const impact = Math.min((parseFloat(fromAmount) / 1000) * Math.random(), 3);
           setPriceImpact(impact.toFixed(2));
           
-    } catch (err: any) {
+    } catch (err: Record<string, unknown>) {
       console.error('Failed to get quote from Velar:', err);
       
       if (err.message?.includes('No pool') || err.message?.includes('no route')) {
@@ -363,11 +363,11 @@ export function SwapToken({
       
       // Execute swap via Stacks wallet
       // openContractCall expects specific network type
-      const options: any = {
+      const options: Record<string, unknown> = {
         ...swapTx,
             network: 'mainnet',
         anchorMode: AnchorMode.Any,
-        onFinish: (data: any) => {
+        onFinish: (data: Record<string, unknown>) => {
           console.log('✅ Velar swap successful:', data.txId);
           setTxId(data.txId);
           setLoading(false);
@@ -381,7 +381,7 @@ export function SwapToken({
       
       await openContractCall(options);
       
-    } catch (err: any) {
+    } catch (err: Record<string, unknown>) {
       console.error('❌ Velar swap failed:', err);
       
       const errorMessage = err.message || 'Swap failed';

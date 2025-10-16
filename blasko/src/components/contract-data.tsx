@@ -13,8 +13,8 @@ type ContractDataProps = {
   canonical: boolean;
   clarity_version: number;
   source_code?: string;
-  abi?: any;
-  [key: string]: any;
+  abi?: Record<string, unknown>;
+  [key: string]: Record<string, unknown>;
 };
 
 export function ContractData(props: ContractDataProps) {
@@ -125,13 +125,13 @@ export function ContractData(props: ContractDataProps) {
                   {props.abi.functions && props.abi.functions.length > 0 && (
                     <div className="space-y-2">
                       <p className="text-sm font-semibold text-muted-foreground">Functions</p>
-                      {props.abi.functions.map((func: any, idx: number) => (
+                      {props.abi.functions.map((func: Record<string, unknown>, idx: number) => (
                         <div key={idx} className="p-3 bg-muted rounded text-xs space-y-1">
                           <p className="font-mono font-medium">{func.name}</p>
                           <p className="text-muted-foreground">{func.access}</p>
                           {func.args && func.args.length > 0 && (
                             <p className="text-muted-foreground">
-                              Args: {func.args.map((arg: any) => arg.name).join(', ')}
+                              Args: {func.args.map((arg: Record<string, unknown>) => arg.name).join(', ')}
                             </p>
                           )}
                         </div>
@@ -143,7 +143,7 @@ export function ContractData(props: ContractDataProps) {
                   {props.abi.variables && props.abi.variables.length > 0 && (
                     <div className="space-y-2">
                       <p className="text-sm font-semibold text-muted-foreground">Variables</p>
-                      {props.abi.variables.map((variable: any, idx: number) => (
+                      {props.abi.variables.map((variable: Record<string, unknown>, idx: number) => (
                         <div key={idx} className="p-3 bg-muted rounded text-xs">
                           <p className="font-mono">{variable.name}</p>
                           <p className="text-muted-foreground">{variable.type}</p>
@@ -156,7 +156,7 @@ export function ContractData(props: ContractDataProps) {
                   {props.abi.maps && props.abi.maps.length > 0 && (
                     <div className="space-y-2">
                       <p className="text-sm font-semibold text-muted-foreground">Maps</p>
-                      {props.abi.maps.map((map: any, idx: number) => (
+                      {props.abi.maps.map((map: Record<string, unknown>, idx: number) => (
                         <div key={idx} className="p-3 bg-muted rounded text-xs">
                           <p className="font-mono">{map.name}</p>
                         </div>

@@ -18,7 +18,7 @@ type AccountDataProps = {
     fungible_tokens?: Record<string, { balance: string; total_sent: string; total_received: string }>;
     non_fungible_tokens?: Record<string, { count: string; total_sent: string; total_received: string }>;
   };
-  recentTransactions: any[];
+  recentTransactions: Record<string, unknown>[];
 };
 
 export function AccountData({ address, balances, recentTransactions }: AccountDataProps) {

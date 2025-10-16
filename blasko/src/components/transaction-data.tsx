@@ -16,7 +16,7 @@ type TransactionDataProps = {
   tx_result?: {
     repr: string;
   };
-  [key: string]: any;
+  [key: string]: Record<string, unknown>;
 };
 
 export function TransactionData(props: TransactionDataProps) {

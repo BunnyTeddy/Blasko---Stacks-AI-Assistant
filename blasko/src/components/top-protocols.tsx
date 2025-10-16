@@ -86,7 +86,7 @@ export function TopProtocols({ chain, protocols, count }: TopProtocolsProps) {
                   border: '1px solid #374151',
                   borderRadius: '8px',
                 }}
-                formatter={(value: any) => [formatCurrency(value), 'TVL']}
+                formatter={(value: Record<string, unknown>) => [formatCurrency(value), 'TVL']}
               />
               <Bar dataKey="tvl" fill="#8b5cf6" radius={[0, 8, 8, 0]} />
             </BarChart>

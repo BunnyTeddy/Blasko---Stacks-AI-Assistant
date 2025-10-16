@@ -146,7 +146,7 @@ export function MultiSend(props: MultiSendProps) {
       setCsvText('');
       setShowCsvInput(false);
       setError(null);
-    } catch (err: any) {
+    } catch (err: Record<string, unknown>) {
       setError(err.message);
     }
   };
@@ -199,7 +199,7 @@ export function MultiSend(props: MultiSendProps) {
       });
 
       setTxId(response.txid);
-    } catch (err: any) {
+    } catch (err: Record<string, unknown>) {
       console.error('Multi-send error:', err);
       if (err.message?.includes('User rejected')) {
         setError('Transaction cancelled by user');

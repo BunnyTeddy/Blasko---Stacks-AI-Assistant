@@ -29,7 +29,7 @@ interface StackStxProps {
   lockPeriod?: number;
   btcAddress?: string;
   poolAddress?: string;
-  poxInfo?: any;
+  poxInfo?: Record<string, unknown>;
 }
 
 // Popular stacking pools (using real addresses from known pools)
@@ -142,7 +142,7 @@ export function StackStx({
         if (txResponse.ok) {
           const txData = await txResponse.json();
           // Check if there's a recent successful delegate-stx transaction
-          hasPendingDelegation = txData.results?.some((tx: any) => 
+          hasPendingDelegation = txData.results?.some((tx: Record<string, unknown>) => 
             tx.tx_status === 'success' && 
             tx.tx_type === 'contract_call' &&
             tx.contract_call?.function_name === 'delegate-stx'
