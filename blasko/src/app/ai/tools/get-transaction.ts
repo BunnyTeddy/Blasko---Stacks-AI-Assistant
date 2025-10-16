@@ -13,7 +13,7 @@ export const getTransactionTool = createTool({
       const response = await fetch(`https://api.hiro.so/extended/v1/tx/${txId}`, {
         headers: {
           'Accept': 'application/json',
-          'x-api-key': API_KEY,
+          'x-api-key': API_KEY || '',
         },
       });
 

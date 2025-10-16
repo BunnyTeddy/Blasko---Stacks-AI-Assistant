@@ -30,7 +30,7 @@ export const resolveBNSTool = createTool({
         const response = await fetch(`https://api.hiro.so/v1/names/${input}`, {
           headers: {
             'Accept': 'application/json',
-            'x-api-key': API_KEY,
+            'x-api-key': API_KEY || '',
           },
         });
 

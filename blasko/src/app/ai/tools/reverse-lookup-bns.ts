@@ -24,7 +24,7 @@ export const reverseLookupBNSTool = createTool({
       const response = await fetch(`https://api.hiro.so/v1/addresses/stacks/${address}`, {
         headers: {
           'Accept': 'application/json',
-          'x-api-key': API_KEY,
+          'x-api-key': API_KEY || '',
         },
       });
 

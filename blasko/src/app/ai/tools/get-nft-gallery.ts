@@ -20,7 +20,7 @@ export const getNftGalleryTool = createTool({
         {
           headers: {
             'Accept': 'application/json',
-            'x-api-key': API_KEY,
+            'x-api-key': API_KEY || '',
           },
         }
       );
@@ -65,7 +65,7 @@ export const getNftGalleryTool = createTool({
             {
               headers: {
                 'Accept': 'application/json',
-                'x-api-key': API_KEY,
+                'x-api-key': API_KEY || '',
               },
             }
           );
@@ -88,7 +88,7 @@ export const getNftGalleryTool = createTool({
                   {
                     headers: {
                       'Accept': 'application/json',
-                      'x-api-key': API_KEY,
+                      'x-api-key': API_KEY || '',
                     },
                   }
                 );
