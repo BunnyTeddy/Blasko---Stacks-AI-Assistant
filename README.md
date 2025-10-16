@@ -12,9 +12,15 @@
 
 ## 🎯 The Problem
 
-* **67% of interested users avoid DeFi** because interfaces are too complex and intimidating.
-* **No accessible AI assistant exists** for the Stacks blockchain ecosystem ($200M+ TVL, 0 user-friendly tools).
-* **Users struggle** with unclear error messages, network confusion, and time-consuming manual processes across multiple DeFi platforms.
+Blockchain adoption is stuck at 5% due to three critical barriers:
+
+1. **Overwhelming Complexity** - 89% of users abandon DeFi because interfaces are too technical (42-character addresses, "gwei" calculations, "slippage tolerance")
+
+2. **Fragmented Experience** - Users must juggle 5+ different platforms with different interfaces and logins for basic tasks
+
+3. **Phishing Epidemic** - 400% increase in phishing attacks keeps users afraid of losing money to fake websites
+
+*Our campus survey of 67 CS students validates this: 53.8% find it too complex, 46.2% fear security risks, yet 69.3% want an AI solution.*
 
 ---
 
@@ -190,14 +196,6 @@ Try these natural language commands:
 - 📅 **Q3 2025:** Multi-language support, advanced AI features
 - 📅 **2025+:** Multi-chain expansion, institutional features
 
----
-
-## 📚 Documentation
-
-* **[Knowledge Feature](blasko/KNOWLEDGE_FEATURE.md)** - How the AI knowledge base works
-* **[Problem Validation](PROBLEM_VALIDATION.md)** - Research, competitive analysis, market gap
-* **[Pitch Deck Outline](PITCH_DECK_OUTLINE.md)** - Complete pitch structure
-* **[Pitch Cheat Sheet](PITCH_CHEAT_SHEET.md)** - Quick reference for presentations
 
 ---
 

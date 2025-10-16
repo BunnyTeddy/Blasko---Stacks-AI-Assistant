@@ -106,7 +106,7 @@ export function SwapToken({
             }
             return isSupported;
           })
-          .map(([symbol]: [string, any]) => {
+          .map(([symbol]: [string, unknown]) => {
             // Use hardcoded mapping since API only returns symbols
             const address = getVelarTokenAddress(symbol);
             return {

@@ -69,8 +69,8 @@ export function StackStx({
   const [error, setError] = useState<string | null>(null);
   const [txId, setTxId] = useState<string | null>(null);
   const [walletConnected, setWalletConnected] = useState(false);
-  const [poxInfo, setPoxInfo] = useState<any>(initialPoxInfo);
-  const [stackingStatus, setStackingStatus] = useState<any>(null);
+  const [poxInfo, setPoxInfo] = useState<Record<string, unknown> | null>(initialPoxInfo);
+  const [stackingStatus, setStackingStatus] = useState<Record<string, unknown> | null>(null);
   const [userAddress, setUserAddress] = useState<string>('');
 
   useEffect(() => {
