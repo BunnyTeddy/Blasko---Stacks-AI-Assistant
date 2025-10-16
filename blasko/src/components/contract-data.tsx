@@ -14,7 +14,6 @@ type ContractDataProps = {
   clarity_version: number;
   source_code?: string;
   abi?: Record<string, unknown>;
-  [key: string]: Record<string, unknown>;
 };
 
 export function ContractData(props: ContractDataProps) {
