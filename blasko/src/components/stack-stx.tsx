@@ -184,7 +184,7 @@ export function StackStx({
   const calculateEstimatedRewards = () => {
     if (!amount || !poxInfo) return '0';
     const amountNum = parseFloat(amount);
-    const totalStacked = poxInfo.current_cycle?.stacked_ustx || 1;
+    const totalStacked = (poxInfo.current_cycle as Record<string, unknown> | undefined)?.stacked_ustx as number || 1;
     const userShare = (amountNum * 1e6) / totalStacked;
     // Rough estimate: ~900 BTC distributed per year across all stackers
     const annualBtc = 900;
@@ -195,7 +195,7 @@ export function StackStx({
 
   const getMinimumThreshold = () => {
     if (!poxInfo) return '125000';
-    return (parseInt(poxInfo.min_amount_ustx || '125000000000') / 1e6).toLocaleString();
+    return (parseInt(String(poxInfo.min_amount_ustx || '125000000000')) / 1e6).toLocaleString();
   };
 
   const handleSoloStack = async () => {
@@ -205,7 +205,7 @@ export function StackStx({
     }
 
     const amountNum = parseFloat(amount);
-    const minThreshold = parseInt(poxInfo?.min_amount_ustx || '125000000000') / 1e6;
+    const minThreshold = parseInt(String(poxInfo?.min_amount_ustx || '125000000000')) / 1e6;
 
     if (!amount || amountNum < minThreshold) {
       setError(`Minimum stacking amount is ${minThreshold.toLocaleString()} STX for solo stacking`);
@@ -402,8 +402,8 @@ export function StackStx({
   };
 
   const getUnlockDate = () => {
-    if (!poxInfo?.current_cycle?.id) return 'N/A';
-    const unlockCycle = poxInfo.current_cycle.id + lockPeriod + 1;
+    if (!(poxInfo?.current_cycle as Record<string, unknown> | undefined)?.id) return 'N/A';
+    const unlockCycle = Number((poxInfo.current_cycle as Record<string, unknown>).id) + lockPeriod + 1;
     const daysUntilUnlock = lockPeriod * 14; // ~2 weeks per cycle
     const unlockDate = new Date();
     unlockDate.setDate(unlockDate.getDate() + daysUntilUnlock);
@@ -518,7 +518,7 @@ export function StackStx({
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-3 bg-gray-50 rounded-lg">
                   <p className="text-xs text-gray-500">Current Cycle</p>
-                  <p className="text-lg font-semibold">{poxInfo.current_cycle?.id || 'N/A'}</p>
+                  <p className="text-lg font-semibold">{(poxInfo.current_cycle as Record<string, unknown> | undefined)?.id || 'N/A'}</p>
                 </div>
                 <div className="p-3 bg-gray-50 rounded-lg">
                   <p className="text-xs text-gray-500">Minimum STX</p>
@@ -891,13 +891,13 @@ export function StackStx({
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Current Cycle</span>
-                        <span className="font-medium">{poxInfo.current_cycle?.id || 'N/A'}</span>
+                        <span className="font-medium">{(poxInfo.current_cycle as Record<string, unknown> | undefined)?.id || 'N/A'}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Total Stacked</span>
                         <span className="font-medium">
                           {poxInfo.current_cycle?.stacked_ustx ? 
-                            `${(parseInt(poxInfo.current_cycle.stacked_ustx) / 1e6 / 1e6).toFixed(1)}M STX` : 
+                            `${(parseInt(String((poxInfo.current_cycle as Record<string, unknown>).stacked_ustx)) / 1e6 / 1e6).toFixed(1)}M STX` : 
                             'N/A'}
                         </span>
                       </div>
