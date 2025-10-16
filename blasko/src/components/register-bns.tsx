@@ -83,7 +83,7 @@ export function RegisterBNS({
       console.log('Transaction payload:', payload);
 
       const response = await request('stx_callContract', {
-        contract: payload.contractAddress + '.' + payload.contractName,
+        contract: `${payload.contractAddress}.${payload.contractName}` as `${string}.${string}`,
         functionName: payload.functionName,
         functionArgs: payload.functionArgs,
         postConditionMode: 'allow',
@@ -92,7 +92,7 @@ export function RegisterBNS({
 
       setTxId(response.txid || null);
       console.log('✅ Registration submitted:', response.txid);
-    } catch {
+    } catch (err: unknown) {
       console.error('❌ Registration failed:', err);
       const errorMessage = err instanceof Error ? err.message : 'Registration failed';
       

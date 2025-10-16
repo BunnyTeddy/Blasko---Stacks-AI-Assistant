@@ -120,44 +120,48 @@ export function ContractData(props: ContractDataProps) {
             <CollapsibleContent className="mt-2">
               <ScrollArea className="h-96 w-full">
                 <div className="space-y-3">
-                  {/* Functions */}
-                  {props.abi.functions && props.abi.functions.length > 0 && (
-                    <div className="space-y-2">
-                      <p className="text-sm font-semibold text-muted-foreground">Functions</p>
-                      {props.abi.functions.map((func: Record<string, unknown>, idx: number) => (
-                        <div key={idx} className="p-3 bg-muted rounded text-xs space-y-1">
-                          <p className="font-mono font-medium">{func.name}</p>
-                          <p className="text-muted-foreground">{func.access}</p>
-                          {func.args && func.args.length > 0 && (
-                            <p className="text-muted-foreground">
-                              Args: {func.args.map((arg: Record<string, unknown>) => arg.name).join(', ')}
-                            </p>
-                          )}
+                  {props.abi && (
+                    <>
+                      {/* Functions */}
+                      {Array.isArray((props.abi as { functions?: unknown[] }).functions) && (props.abi as { functions: Array<Record<string, unknown>> }).functions.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold text-muted-foreground">Functions</p>
+                          {(props.abi as { functions: Array<Record<string, unknown>> }).functions.map((func, idx) => (
+                            <div key={idx} className="p-3 bg-muted rounded text-xs space-y-1">
+                              <p className="font-mono font-medium">{String(func.name)}</p>
+                              <p className="text-muted-foreground">{String(func.access)}</p>
+                              {Array.isArray(func.args) && (func.args as Array<Record<string, unknown>>).length > 0 && (
+                                <p className="text-muted-foreground">
+                                  Args: {(func.args as Array<Record<string, unknown>>).map((arg) => String(arg.name)).join(', ')}
+                                </p>
+                              )}
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  )}
+                      )}
 
-                  {/* Variables */}
-                  {props.abi.variables && props.abi.variables.length > 0 && (
-                    <div className="space-y-2">
-                      <p className="text-sm font-semibold text-muted-foreground">Variables</p>
-                      {props.abi.variables.map((variable: Record<string, unknown>, idx: number) => (
-                        <div key={idx} className="p-3 bg-muted rounded text-xs">
-                          <p className="font-mono">{variable.name}</p>
-                          <p className="text-muted-foreground">{variable.type}</p>
+                      {/* Variables */}
+                      {Array.isArray((props.abi as { variables?: unknown[] }).variables) && (props.abi as { variables: Array<Record<string, unknown>> }).variables.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold text-muted-foreground">Variables</p>
+                          {(props.abi as { variables: Array<Record<string, unknown>> }).variables.map((variable, idx) => (
+                            <div key={idx} className="p-3 bg-muted rounded text-xs">
+                              <p className="font-mono">{String(variable.name)}</p>
+                              <p className="text-muted-foreground">{String(variable.type)}</p>
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
+                      )}
+                    </>
                   )}
 
                   {/* Maps */}
-                  {props.abi.maps && props.abi.maps.length > 0 && (
+                  {props.abi && Array.isArray((props.abi as { maps?: unknown[] }).maps) && (props.abi as { maps: Array<Record<string, unknown>> }).maps.length > 0 && (
                     <div className="space-y-2">
                       <p className="text-sm font-semibold text-muted-foreground">Maps</p>
-                      {props.abi.maps.map((map: Record<string, unknown>, idx: number) => (
+                      {(props.abi as { maps: Array<Record<string, unknown>> }).maps.map((map, idx) => (
                         <div key={idx} className="p-3 bg-muted rounded text-xs">
-                          <p className="font-mono">{map.name}</p>
+                          <p className="font-mono">{String(map.name)}</p>
                         </div>
                       ))}
                     </div>

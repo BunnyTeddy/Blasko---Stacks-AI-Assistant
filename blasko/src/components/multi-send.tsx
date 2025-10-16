@@ -146,8 +146,8 @@ export function MultiSend(props: MultiSendProps) {
       setCsvText('');
       setShowCsvInput(false);
       setError(null);
-    } catch (err: Record<string, unknown>) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'CSV parsing failed');
     }
   };
 
@@ -182,7 +182,7 @@ export function MultiSend(props: MultiSendProps) {
       // Calculate total amount to send (in microSTX)
       const totalMicroSTX = recipients.reduce(
         (sum, r) => sum + BigInt(r.amountMicroSTX),
-        0n
+        BigInt(0)
       );
 
       // Add post-condition: sender will send at most the total amount
@@ -198,13 +198,14 @@ export function MultiSend(props: MultiSendProps) {
         network: 'mainnet',
       });
 
-      setTxId(response.txid);
-    } catch (err: Record<string, unknown>) {
+      setTxId(response.txid || null);
+    } catch (err: unknown) {
       console.error('Multi-send error:', err);
-      if (err.message?.includes('User rejected')) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      if (errorMessage.includes('User rejected')) {
         setError('Transaction cancelled by user');
       } else {
-        setError(err.message || 'Failed to send transaction');
+        setError(errorMessage || 'Failed to send transaction');
       }
     } finally {
       setIsSubmitting(false);

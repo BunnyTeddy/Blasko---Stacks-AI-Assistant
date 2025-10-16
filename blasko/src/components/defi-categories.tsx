@@ -63,7 +63,7 @@ export function DefiCategories({
   }));
 
   // Custom tooltip component
-  const CustomTooltip = ({ active, payload }: Record<string, unknown>) => {
+  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ name: string; value: number }> }) => {
     if (active && payload && payload.length) {
       const data = payload[0];
       const percentage = ((data.value / totalTVL) * 100).toFixed(2);

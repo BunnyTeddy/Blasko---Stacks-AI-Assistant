@@ -69,7 +69,7 @@ export function StackStx({
   const [error, setError] = useState<string | null>(null);
   const [txId, setTxId] = useState<string | null>(null);
   const [walletConnected, setWalletConnected] = useState(false);
-  const [poxInfo, setPoxInfo] = useState<Record<string, unknown> | null>(initialPoxInfo);
+  const [poxInfo, setPoxInfo] = useState<Record<string, unknown> | null>(initialPoxInfo || null);
   const [stackingStatus, setStackingStatus] = useState<Record<string, unknown> | null>(null);
   const [userAddress, setUserAddress] = useState<string>('');
 
@@ -145,7 +145,7 @@ export function StackStx({
           hasPendingDelegation = txData.results?.some((tx: Record<string, unknown>) => 
             tx.tx_status === 'success' && 
             tx.tx_type === 'contract_call' &&
-            tx.contract_call?.function_name === 'delegate-stx'
+            (tx.contract_call as Record<string, unknown> | undefined)?.function_name === 'delegate-stx'
           ) || false;
           
           if (hasPendingDelegation) {

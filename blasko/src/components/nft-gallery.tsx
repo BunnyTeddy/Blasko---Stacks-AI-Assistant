@@ -50,8 +50,8 @@ export function NftGallery({ address, totalNfts, collectionsCount, collections }
     setExpandedCollections(newExpanded);
   };
 
-  const formatContractName = (contractId: string, assetName: string, metadata?: Record<string, unknown>) => {
-    if (metadata?.name) return metadata.name;
+  const formatContractName = (contractId: string, assetName: string, metadata?: Record<string, unknown>): string => {
+    if (metadata?.name) return String(metadata.name);
     
     // Extract readable name from contract
     const parts = contractId.split('.');

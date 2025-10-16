@@ -52,7 +52,7 @@ export function SwapToken({
       const sdk = new VelarSDK({ network: 'mainnet' } as Record<string, unknown>);
       setVelarSDK(sdk);
       console.log('✅ Velar SDK initialized with mainnet');
-    } catch {
+    } catch (err: unknown) {
       console.error('Failed to initialize Velar SDK with config:', err);
       // Fallback: try without network parameter
       try {
@@ -128,7 +128,7 @@ export function SwapToken({
         
         setAvailableTokens(sorted);
         console.log('✅ Loaded', sorted.length, 'tokens from Velar:', sorted.map(t => t.symbol).join(', '));
-      } catch {
+      } catch (err: unknown) {
         console.error('Failed to fetch tokens from Velar:', err);
         // Fallback tokens with Velar-compatible addresses (all hardcoded tokens)
         setAvailableTokens([
@@ -190,7 +190,7 @@ export function SwapToken({
       
       console.log('✅ Swap instance created:', fromToken, '→', toToken);
       return instance;
-      } catch {
+      } catch (err: unknown) {
       console.error('❌ Failed to create swap instance:', err);
       console.error('Error details:', {
         message: (err as Error).message,
