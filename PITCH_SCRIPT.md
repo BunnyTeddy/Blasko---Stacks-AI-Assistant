@@ -57,16 +57,30 @@ These incidents affect **both novice and experienced users**, creating a pervasi
 
 ---
 
-## 📋 RESEARCH VALIDATION (25 seconds)
+## 📋 RESEARCH VALIDATION (35 seconds)
 
-**To validate these findings, we conducted primary research:**
+**To validate these findings, we conducted a two-stage primary research approach:**
 
-We surveyed 67 university students representing potential future DeFi users. We received 17 responses with the following key findings:
+### **Stage 1: Quantitative Survey**
 
-**Findings:**
-- Majority (70%+) rated DeFi platforms as "confusing" or "intimidating"
-- Primary concern cited: Fear of financial loss
-- Most respondents would not attempt DeFi without guided assistance
+We surveyed 67 university students representing potential future DeFi users, receiving 17 responses. Initial findings indicated:
+- 70%+ rated DeFi platforms as "confusing" or "intimidating"
+- Primary concern: Fear of financial loss
+- Most would not attempt DeFi without guided assistance
+
+### **Stage 2: Qualitative Interviews**
+
+From the survey respondents, we selected 3 participants for in-depth 5-minute interviews to understand the barriers more deeply.
+
+**Key insights from interviews:**
+
+**Participant 1** expressed: *"I'm interested in crypto, but I don't know where to start. Every tutorial assumes I already know terms like 'liquidity pool' and 'slippage.' I gave up after 30 minutes."*
+
+**Participant 2** shared: *"I wanted to try DeFi, but I'm terrified of clicking the wrong button and losing money. There's no undo button."*
+
+**Participant 3** stated: *"Why do I need 5 different websites just to manage my crypto? My bank app does everything in one place."*
+
+**Aha Moment:** These interviews revealed that the problem isn't just complexity—it's the **absence of guidance**. Users want to participate but lack a trusted assistant to navigate the ecosystem. This realization directly informed our decision to build Blasko.
 
 **Significance:** This demographic represents digital natives. If they perceive DeFi as inaccessible, mainstream adoption barriers are substantial.
 
@@ -166,7 +180,8 @@ The Stacks ecosystem has significant TVL but lacks accessible tooling. Blasko fi
 - 85% - Current DeFi users who are crypto-native
 - $300M - 2023 phishing losses (Chainalysis)
 - $200M+ - Stacks ecosystem TVL
-- 67/17 - Survey sample/response rate
+- 67/17/3 - Survey sample/response rate/interview participants
+- 70%+ - Survey respondents rating DeFi as confusing/intimidating
 
 ### **Evidence Sources (Cited in Pitch):**
 - Smith, P. (2023). "How Poor User Experience is Holding Back Web3 Adoption." HackerNoon.
@@ -224,12 +239,12 @@ The Stacks ecosystem has significant TVL but lacks accessible tooling. Blasko fi
 
 - Introduction: 10s
 - Problem Statement: 50s
-- Research Validation: 25s
+- Research Validation: 35s *(updated - includes interview insights)*
 - Proposed Solution: 50s
 - Competitive Advantage: 20s
 - Conclusion: 15s
 
-**Total: ~2:50 minutes** (allows 10s flexibility)
+**Total: ~3:00 minutes** (tight but comprehensive)
 
 ---
 
@@ -250,8 +265,8 @@ The Stacks ecosystem has significant TVL but lacks accessible tooling. Blasko fi
 ### **Q: How do you address the security concerns you cited in the problem statement?**
 **A:** "Security is implemented through several mechanisms: integration with established wallet providers that handle key management, mandatory user confirmation for all transactions, no custody model so we never hold funds, and educational features through our knowledge base to help users identify legitimate interactions."
 
-### **Q: What was your survey methodology?**
-**A:** "We conducted a convenience sample survey of 67 university students, receiving 17 responses representing a 25% response rate. We acknowledge this is a limited sample size. The survey asked about DeFi experience, perceived barriers, and security concerns. Results aligned with published research on DeFi adoption barriers."
+### **Q: What was your research methodology?**
+**A:** "We employed a two-stage mixed-methods approach. Stage 1: Quantitative survey of 67 university students, receiving 17 responses (25% response rate). We acknowledge this is a limited sample. Stage 2: We selected 3 respondents for qualitative 5-minute interviews to understand barriers more deeply. The interview insights revealed that users want to participate but lack guidance—this 'aha moment' directly informed our solution design. Results from both stages aligned with published DeFi adoption research."
 
 ---
 
@@ -293,11 +308,22 @@ Retrieved from: https://www.techtarget.com/searchcio/tip/5-challenges-with-block
 
 ### **Primary Research:**
 
-**Blasko Research Team** (2024). University student survey on DeFi adoption barriers.  
-- Sample: 67 students
+**Blasko Research Team** (2024). Mixed-methods study on DeFi adoption barriers among university students.  
+
+**Stage 1 - Quantitative Survey:**
+- Sample: 67 university students
 - Response rate: 25% (n=17)
 - Methodology: Convenience sampling, structured questionnaire
 - Key findings: 70%+ rated platforms as confusing/intimidating, fear of loss primary concern
+
+**Stage 2 - Qualitative Interviews:**
+- Sample: 3 participants selected from survey respondents
+- Format: Semi-structured 5-minute interviews
+- Focus: Deep understanding of barriers and user expectations
+- Key insight: Users want guidance, not just simplified interfaces
+- Result: "Aha moment" informing product direction - need for AI assistant
+
+**Participant quotes used with consent. Interview data informed product feature design.**
 
 ---
 
