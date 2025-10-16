@@ -330,7 +330,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <MultiSend {...(part.output as Record<string, unknown>)} />;
+                                return <MultiSend {...(part.output as Parameters<typeof MultiSend>[0])} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
