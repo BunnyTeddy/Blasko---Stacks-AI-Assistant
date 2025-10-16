@@ -45,7 +45,7 @@ export function ProtocolInfo({
   historicalTVL,
   chains,
 }: ProtocolInfoProps) {
-  const formatCurrency = (value: number | any) => {
+  const formatCurrency = (value: number | unknown) => {
     // Ensure value is a valid number
     const numValue = typeof value === 'number' ? value : parseFloat(String(value)) || 0;
     
@@ -61,13 +61,13 @@ export function ProtocolInfo({
     return `$${numValue.toFixed(2)}`;
   };
 
-  const formatDate = (timestamp: number | any) => {
+  const formatDate = (timestamp: number | unknown) => {
     const numTimestamp = typeof timestamp === 'number' ? timestamp : parseInt(String(timestamp)) || 0;
     const date = new Date(numTimestamp * 1000);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
-  const formatPercent = (value: number | any) => {
+  const formatPercent = (value: number | unknown) => {
     const numValue = typeof value === 'number' ? value : parseFloat(String(value)) || 0;
     const sign = numValue >= 0 ? '+' : '';
     return `${sign}${numValue.toFixed(2)}%`;
