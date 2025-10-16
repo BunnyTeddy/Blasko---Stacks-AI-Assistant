@@ -51,11 +51,6 @@ export function BridgeToken({
           setRecipient(userData.addresses.stx[0].address);
         }
       }
-      
-      // Check for Bitcoin address
-      if (userData.addresses.btc?.[0]?.address) {
-        setHasBitcoinAddress(true);
-      }
     }
   }, [initialDirection, initialRecipient]);
 
