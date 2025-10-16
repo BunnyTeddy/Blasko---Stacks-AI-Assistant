@@ -101,13 +101,13 @@ export const getNftGalleryTool = createTool({
                     attributes: nftMetadata.attributes || [],
                   };
                 }
-              } catch (err) {
+              } catch {
                 // Skip if individual NFT metadata fails
                 console.log(`Could not fetch metadata for NFT ${tokenIdClean}`);
               }
             }
           }
-        } catch (err) {
+        } catch {
           console.log(`Could not fetch metadata for collection ${collection.contractId}`);
         }
       }

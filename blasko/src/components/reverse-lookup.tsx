@@ -106,7 +106,7 @@ export function ReverseLookup({ address, bnsName, allNames = [], message, error 
               <p className="text-sm text-gray-700 font-medium">No BNS Name Found</p>
             </div>
             <p className="text-xs text-gray-600">
-              This address doesn't have a registered BNS name yet. The owner can register one to
+              This address doesn&apos;t have a registered BNS name yet. The owner can register one to
               make their address more memorable!
             </p>
           </div>
@@ -128,7 +128,7 @@ export function ReverseLookup({ address, bnsName, allNames = [], message, error 
           <p className="font-medium mb-1">About BNS Names</p>
           <p>
             BNS (Bitcoin Name Service) allows users to register human-readable names like
-            "alice.btc" that map to their Stacks addresses. A principal can only own one primary
+            &quot;alice.btc&quot; that map to their Stacks addresses. A principal can only own one primary
             name at a time.
           </p>
         </div>

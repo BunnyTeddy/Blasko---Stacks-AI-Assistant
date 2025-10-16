@@ -8,13 +8,11 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
   const {
     messages,
-    model,
-    webSearch,
     walletAddress,
   }: { 
     messages: UIMessage[]; 
-    model: string; 
-    webSearch: boolean;
+    model?: string; 
+    webSearch?: boolean;
     walletAddress?: string;
   } = await req.json();
 

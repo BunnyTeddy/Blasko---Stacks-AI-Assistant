@@ -17,18 +17,18 @@ export const getDefiCategoriesTool = createTool({
       
       // Filter Stacks protocols
       const stacksProtocols = allProtocols
-        .filter((p: any) => {
+        .filter((p: { chains?: string[]; chain?: string }) => {
           const chains = p.chains || [];
           return chains.includes('Stacks') || p.chain === 'Stacks';
         });
 
       // Calculate total TVL
-      const totalTVL = stacksProtocols.reduce((sum: number, p: any) => sum + (p.tvl || 0), 0);
+      const totalTVL = stacksProtocols.reduce((sum: number, p: { tvl?: number }) => sum + (p.tvl || 0), 0);
 
       // Group protocols by category
       const categoriesMap: Record<string, { tvl: number; count: number; protocols: string[] }> = {};
       
-      stacksProtocols.forEach((p: any) => {
+      stacksProtocols.forEach((p: { category?: string; tvl?: number; name: string }) => {
         const category = p.category || 'Other';
         if (!categoriesMap[category]) {
           categoriesMap[category] = { tvl: 0, count: 0, protocols: [] };

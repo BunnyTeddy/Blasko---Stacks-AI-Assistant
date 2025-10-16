@@ -148,7 +148,7 @@ export function SendToken({
         setTxId(response.txid || null);
         console.log('✅ Token transfer successful:', response.txid);
       }
-    } catch (err) {
+    } catch {
       console.error('❌ Transfer failed:', err);
       
       // Handle user rejection gracefully

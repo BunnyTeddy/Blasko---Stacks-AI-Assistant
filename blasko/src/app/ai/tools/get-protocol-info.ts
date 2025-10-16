@@ -21,7 +21,7 @@ export const getProtocolInfoTool = createTool({
       const allProtocols = await protocolsResponse.json();
       
       // Find the protocol (check both name and slug, and must be on Stacks)
-      const protocol = allProtocols.find((p: any) => {
+      const protocol = allProtocols.find((p: { chains?: string[]; chain?: string; name: string; slug?: string }) => {
         const chains = p.chains || [];
         const isOnStacks = chains.includes('Stacks') || p.chain === 'Stacks';
         const nameMatch = p.name.toLowerCase().includes(searchName) || 
@@ -57,7 +57,7 @@ export const getProtocolInfoTool = createTool({
           } else if (details.tvl) {
             // Fallback to overall TVL history
             historicalTVL = details.tvl
-              .map((entry: any) => {
+              .map((entry: { date: number; totalLiquidityUSD?: number | string }) => {
                 const numericTvl = typeof entry.totalLiquidityUSD === 'number' 
                   ? entry.totalLiquidityUSD 
                   : parseFloat(String(entry.totalLiquidityUSD)) || 0;
@@ -66,7 +66,7 @@ export const getProtocolInfoTool = createTool({
                   tvl: numericTvl,
                 };
               })
-              .filter((entry: any) => !isNaN(entry.date) && !isNaN(entry.tvl));
+              .filter((entry: { date: number; tvl: number }) => !isNaN(entry.date) && !isNaN(entry.tvl));
           }
         }
       } catch (e) {
@@ -75,7 +75,7 @@ export const getProtocolInfoTool = createTool({
       }
 
       // Helper function to ensure numeric values
-      const toNumber = (value: any): number => {
+      const toNumber = (value: unknown): number => {
         if (typeof value === 'number' && !isNaN(value)) return value;
         if (typeof value === 'string') {
           const parsed = parseFloat(value);

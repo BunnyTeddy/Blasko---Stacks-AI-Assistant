@@ -103,7 +103,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
     try {
       const userData = getLocalStorage();
       walletAddress = userData?.addresses?.stx?.[0]?.address;
-    } catch (e) {
+    } catch {
       // Ignore if wallet not connected
     }
 
@@ -304,7 +304,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <SendToken {...(part.output as any)} />;
+                                return <SendToken {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -330,7 +330,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <MultiSend {...(part.output as any)} />;
+                                return <MultiSend {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -356,7 +356,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <TransactionData {...(part.output as any)} />;
+                                return <TransactionData {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -382,7 +382,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <ContractData {...(part.output as any)} />;
+                                return <ContractData {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -410,7 +410,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                               case 'output-available':
                                 return (
                                   <ScrollArea className="max-h-[600px] w-full">
-                                    <AccountData {...(part.output as any)} />
+                                    <AccountData {...(part.output as Record<string, unknown>)} />
                                   </ScrollArea>
                                 );
                               case 'output-error':
@@ -438,7 +438,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <SwapToken {...(part.output as any)} />;
+                                return <SwapToken {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -464,7 +464,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <BridgeToken {...(part.output as any)} />;
+                                return <BridgeToken {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -490,7 +490,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <StackStx {...(part.output as any)} />;
+                                return <StackStx {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -518,7 +518,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                               case 'output-available':
                                 return (
                                   <ScrollArea className="max-h-[600px] w-full">
-                                    <NftGallery {...(part.output as any)} />
+                                    <NftGallery {...(part.output as Record<string, unknown>)} />
                                   </ScrollArea>
                                 );
                               case 'output-error':
@@ -546,7 +546,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <BNSResolver {...(part.output as any)} />;
+                                return <BNSResolver {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -572,7 +572,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <ReverseLookup {...(part.output as any)} />;
+                                return <ReverseLookup {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -598,7 +598,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <RegisterBNS {...(part.output as any)} />;
+                                return <RegisterBNS {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -624,7 +624,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <StacksTVL {...(part.output as any)} />;
+                                return <StacksTVL {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -650,7 +650,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <TopProtocols {...(part.output as any)} />;
+                                return <TopProtocols {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -676,7 +676,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <DefiCategories {...(part.output as any)} />;
+                                return <DefiCategories {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -702,7 +702,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <ProtocolInfo {...(part.output as any)} />;
+                                return <ProtocolInfo {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">
@@ -728,7 +728,7 @@ const ChatBotDemo = ({ chatId }: ChatBotDemoProps) => {
                                   </div>
                                 );
                               case 'output-available':
-                                return <StacksKnowledge {...(part.output as any)} />;
+                                return <StacksKnowledge {...(part.output as Record<string, unknown>)} />;
                               case 'output-error':
                                 return (
                                   <div className="text-red-500 text-sm">

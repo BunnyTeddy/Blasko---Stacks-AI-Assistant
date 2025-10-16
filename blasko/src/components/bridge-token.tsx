@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeftRight, ExternalLink, AlertCircle, CheckCircle2, Loader2, ArrowUpDown } from 'lucide-react';
+import { ArrowLeftRight, ExternalLink, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import { request, isConnected, getLocalStorage } from '@stacks/connect';
 import { Cl } from '@stacks/transactions';
 import * as bitcoin from 'bitcoinjs-lib';
@@ -36,7 +36,6 @@ export function BridgeToken({
   const [txId, setTxId] = useState<string | null>(null);
   const [walletConnected, setWalletConnected] = useState(false);
   const [stacksAddress, setStacksAddress] = useState<string>('');
-  const [hasBitcoinAddress, setHasBitcoinAddress] = useState(false);
 
   useEffect(() => {
     setWalletConnected(isConnected());
@@ -211,7 +210,7 @@ export function BridgeToken({
 
       setTxId(response.txid || null);
       console.log('✅ Withdrawal request created:', response.txid);
-    } catch (err) {
+    } catch {
       console.error('❌ Withdrawal failed:', err);
       const errorMessage = err instanceof Error ? err.message : 'Withdrawal request failed';
       
@@ -345,7 +344,7 @@ export function BridgeToken({
               <p className="text-sm text-gray-700 flex items-start gap-2">
                 <AlertCircle className="h-4 w-4 text-blue-600 mt-0.5" />
                 <span>
-                  You'll be redirected to the official sBTC bridge to complete your deposit with pre-filled information. The bridge supports all Bitcoin wallets (Leather, Xverse, Unisat, etc).
+                  You&apos;ll be redirected to the official sBTC bridge to complete your deposit with pre-filled information. The bridge supports all Bitcoin wallets (Leather, Xverse, Unisat, etc).
                 </span>
               </p>
             </div>
@@ -479,7 +478,7 @@ export function BridgeToken({
               {amount && maxFee && parseFloat(amount) > 0 && parseInt(maxFee) > 0 && (
                 <div className="text-xs text-gray-600 bg-gray-50 p-2 rounded">
                   <p>
-                    <strong>You'll receive:</strong> ~
+                    <strong>You&apos;ll receive:</strong> ~
                     {(Math.floor(parseFloat(amount) * 1e8) - parseInt(maxFee)).toLocaleString()} sats
                     {' '}(
                     {((Math.floor(parseFloat(amount) * 1e8) - parseInt(maxFee)) / 1e8).toFixed(8)} BTC)
@@ -531,7 +530,7 @@ export function BridgeToken({
               <p>1. Your sBTC will be locked in the contract</p>
               <p>2. Signers will review and approve the request</p>
               <p>3. Bitcoin transaction will be broadcast to the network</p>
-              <p>4. You'll receive BTC after 3 confirmations (~30 min)</p>
+              <p>4. You&apos;ll receive BTC after 3 confirmations (~30 min)</p>
             </div>
           </div>
         )}

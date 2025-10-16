@@ -1,8 +1,6 @@
 import { tool as createTool } from 'ai';
 import { z } from 'zod';
 
-const API_KEY = process.env.HIRO_API_KEY;
-
 export const swapTokenTool = createTool({
   description: 'Swap tokens on Stacks DEX (ALEX). Use this when the user wants to swap, exchange, or trade tokens for other tokens (e.g., "swap 10 STX for USDA", "exchange sBTC for WELSH").',
   inputSchema: z.object({

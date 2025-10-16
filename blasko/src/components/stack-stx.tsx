@@ -102,7 +102,7 @@ export function StackStx({
       const response = await fetch('https://api.hiro.so/v2/pox');
       const data = await response.json();
       setPoxInfo(data);
-    } catch (err) {
+    } catch {
       console.error('Failed to fetch PoX info:', err);
     }
   };
@@ -174,7 +174,7 @@ export function StackStx({
       
       console.log('📊 Stacking Status:', combinedStatus);
       setStackingStatus(combinedStatus);
-    } catch (err) {
+    } catch {
       console.error('Failed to fetch stacking status:', err);
       // Set a minimal status object to prevent UI crashes
       setStackingStatus({ locked_balance: '0', has_locked_stx: false, has_pending_delegation: false });
@@ -265,7 +265,7 @@ export function StackStx({
 
       setTxId(response.txid || null);
       console.log('✅ Stacking started:', response.txid);
-    } catch (err) {
+    } catch {
       console.error('❌ Stacking failed:', err);
       const errorMessage = err instanceof Error ? err.message : 'Stacking transaction failed';
       
@@ -330,7 +330,7 @@ export function StackStx({
 
       setTxId(response.txid || null);
       console.log('✅ Delegation successful:', response.txid);
-    } catch (err) {
+    } catch {
       console.error('❌ Delegation failed:', err);
       const errorMessage = err instanceof Error ? err.message : 'Delegation failed';
       
@@ -373,7 +373,7 @@ export function StackStx({
       setTimeout(() => {
         fetchStackingStatus();
       }, 2000);
-    } catch (err) {
+    } catch {
       console.error('❌ Revocation failed:', err);
       const errorMessage = err instanceof Error ? err.message : 'Revocation failed';
       
@@ -484,7 +484,7 @@ export function StackStx({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)}>
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as Record<string, unknown>)}>
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="solo">
               <Lock className="h-4 w-4 mr-2" />
@@ -856,7 +856,7 @@ export function StackStx({
                         <p>⏳ Waiting for the pool operator to commit your delegation</p>
                         <p>📦 Your STX will be locked in the next reward cycle</p>
                         <p className="text-xs text-gray-600 mt-3">
-                          <strong>What's happening:</strong> You've delegated to a pool, but the pool operator 
+                          <strong>What&apos;s happening:</strong> You&apos;ve delegated to a pool, but the pool operator 
                           needs to commit your delegation before it becomes active. This usually happens before 
                           the next reward cycle starts (~2 weeks).
                         </p>

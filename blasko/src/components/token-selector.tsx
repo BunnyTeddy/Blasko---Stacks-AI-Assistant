@@ -112,7 +112,7 @@ export function TokenSelector({
                 ))
               ) : (
                 <div className="text-center py-8 text-muted-foreground text-sm">
-                  No tokens found for "{searchQuery}"
+                  No tokens found for &quot;{searchQuery}&quot;
                 </div>
               )}
             </div>

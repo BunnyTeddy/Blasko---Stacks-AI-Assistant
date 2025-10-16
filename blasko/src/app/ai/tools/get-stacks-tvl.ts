@@ -39,7 +39,7 @@ export const getStacksTVLTool = createTool({
           break;
       }
 
-      const filteredTVL = tvlData.filter((entry: any) => entry.date >= cutoffTime);
+      const filteredTVL = tvlData.filter((entry: { date: number; tvl: number }) => entry.date >= cutoffTime);
 
       // Calculate current TVL and changes
       const currentTVL = filteredTVL[filteredTVL.length - 1]?.tvl || 0;
@@ -48,7 +48,7 @@ export const getStacksTVLTool = createTool({
 
       // Calculate 24h change
       const oneDayAgo = now - (24 * 60 * 60);
-      const oneDayAgoEntry = filteredTVL.find((entry: any) => entry.date >= oneDayAgo) || filteredTVL[filteredTVL.length - 2];
+      const oneDayAgoEntry = filteredTVL.find((entry: { date: number; tvl: number }) => entry.date >= oneDayAgo) || filteredTVL[filteredTVL.length - 2];
       const tvlChange24h = oneDayAgoEntry ? ((currentTVL - oneDayAgoEntry.tvl) / oneDayAgoEntry.tvl) * 100 : 0;
 
       return {

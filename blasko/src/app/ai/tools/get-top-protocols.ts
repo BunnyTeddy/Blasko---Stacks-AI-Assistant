@@ -17,13 +17,28 @@ export const getTopProtocolsTool = createTool({
 
       const allProtocols = await protocolsResponse.json();
       
+      interface Protocol {
+        chains?: string[];
+        chain?: string;
+        name: string;
+        tvl?: number;
+        category?: string;
+        change_1d?: number;
+        change_7d?: number;
+        change_1m?: number;
+        mcap?: number;
+        slug?: string;
+        logo?: string | null;
+        url?: string | null;
+      }
+
       // Filter Stacks protocols
       const stacksProtocols = allProtocols
-        .filter((p: any) => {
+        .filter((p: Protocol) => {
           const chains = p.chains || [];
           return chains.includes('Stacks') || p.chain === 'Stacks';
         })
-        .map((p: any) => ({
+        .map((p: Protocol) => ({
           name: p.name,
           tvl: p.tvl || 0,
           category: p.category || 'Unknown',
@@ -35,7 +50,7 @@ export const getTopProtocolsTool = createTool({
           logo: p.logo || null,
           url: p.url || null,
         }))
-        .sort((a: any, b: any) => b.tvl - a.tvl)
+        .sort((a, b) => b.tvl - a.tvl)
         .slice(0, Math.min(Math.max(limit, 1), 20)); // Limit between 1-20
 
       return {
