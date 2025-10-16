@@ -155,15 +155,11 @@ export function BridgeToken({
       // Ensure we have proper hex strings (remove '0x' prefix if present)
       const versionHex = Buffer.isBuffer(version) 
         ? version.toString('hex') 
-        : typeof version === 'string' 
-          ? version.replace('0x', '') 
-          : '';
+        : (version as string).replace('0x', '');
       
       const hashbytesHex = Buffer.isBuffer(hashbytes) 
         ? hashbytes.toString('hex') 
-        : typeof hashbytes === 'string' 
-          ? hashbytes.replace('0x', '') 
-          : '';
+        : (hashbytes as string).replace('0x', '');
 
       console.log('Creating withdrawal request:', {
         amount: amountInMicroUnits,
