@@ -89,26 +89,13 @@ Beautiful UI Components → User Confirmation → Transaction Execution
 
 ## 🛠️ Tech Stack
 
-### **Frontend**
-* **Framework:** Next.js 15.5 (App Router), React 19
-* **Styling:** TailwindCSS 4, Framer Motion
-* **UI Components:** Radix UI, Custom AI Elements
+**Frontend:** Next.js 15, React 19, TailwindCSS 4, Framer Motion, Radix UI
 
-### **AI & Backend**
-* **AI Model:** Google Gemini 2.5 Flash
-* **AI Framework:** Vercel AI SDK
-* **Tool Pattern:** 17 structured AI tools with Zod validation
+**AI:** Google Gemini 2.5 Flash, Vercel AI SDK, Zod validation
 
-### **Blockchain & DeFi**
-* **Blockchain:** Stacks.js (Connect, Transactions, Network)
-* **DEX Integration:** ALEX SDK, Velar SDK, Bitflow SDK, Bro SDK
-* **BNS:** BNS v2 SDK
-* **Data:** Hiro API, TokenLens
+**Blockchain:** Stacks.js, ALEX SDK, Velar SDK, Bitflow SDK, BNS v2 SDK, Hiro API
 
-### **Utilities**
-* **HTML Parsing:** Cheerio (for knowledge extraction)
-* **Charts:** Recharts
-* **Code Display:** React Syntax Highlighter
+**Utilities:** Cheerio, Recharts, React Syntax Highlighter
 
 ---
 
