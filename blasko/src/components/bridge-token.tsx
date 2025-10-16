@@ -85,7 +85,7 @@ export function BridgeToken({
       // Don't pad! Return the actual hash (20 bytes for P2PKH/P2SH)
       return {
         version: Buffer.from([decoded.version]),
-        hashbytes: decoded.hash, // Keep original 20-byte hash
+        hashbytes: Buffer.from(decoded.hash), // Keep original 20-byte hash
       };
     } catch (base58Error) {
       // If base58 fails, try bech32 (SegWit and Taproot)
