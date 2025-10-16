@@ -210,9 +210,9 @@ export function BridgeToken({
 
       setTxId(response.txid || null);
       console.log('✅ Withdrawal request created:', response.txid);
-    } catch {
-      console.error('❌ Withdrawal failed:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Withdrawal request failed';
+    } catch (error) {
+      console.error('❌ Withdrawal failed:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Withdrawal request failed';
       
       if (errorMessage.includes('User rejected') || errorMessage.includes('user rejected')) {
         setError('Transaction cancelled by user');

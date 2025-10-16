@@ -102,8 +102,8 @@ export function StackStx({
       const response = await fetch('https://api.hiro.so/v2/pox');
       const data = await response.json();
       setPoxInfo(data);
-    } catch {
-      console.error('Failed to fetch PoX info:', err);
+    } catch (error) {
+      console.error('Failed to fetch PoX info:', error);
     }
   };
 
@@ -174,8 +174,8 @@ export function StackStx({
       
       console.log('📊 Stacking Status:', combinedStatus);
       setStackingStatus(combinedStatus);
-    } catch {
-      console.error('Failed to fetch stacking status:', err);
+    } catch (error) {
+      console.error('Failed to fetch stacking status:', error);
       // Set a minimal status object to prevent UI crashes
       setStackingStatus({ locked_balance: '0', has_locked_stx: false, has_pending_delegation: false });
     }
@@ -265,9 +265,9 @@ export function StackStx({
 
       setTxId(response.txid || null);
       console.log('✅ Stacking started:', response.txid);
-    } catch {
-      console.error('❌ Stacking failed:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Stacking transaction failed';
+    } catch (error) {
+      console.error('❌ Stacking failed:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Stacking transaction failed';
       
       if (errorMessage.includes('User rejected') || errorMessage.includes('user rejected')) {
         setError('Transaction cancelled by user');
@@ -330,9 +330,9 @@ export function StackStx({
 
       setTxId(response.txid || null);
       console.log('✅ Delegation successful:', response.txid);
-    } catch {
-      console.error('❌ Delegation failed:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Delegation failed';
+    } catch (error) {
+      console.error('❌ Delegation failed:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Delegation failed';
       
       if (errorMessage.includes('User rejected') || errorMessage.includes('user rejected')) {
         setError('Transaction cancelled by user');
@@ -373,9 +373,9 @@ export function StackStx({
       setTimeout(() => {
         fetchStackingStatus();
       }, 2000);
-    } catch {
-      console.error('❌ Revocation failed:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Revocation failed';
+    } catch (error) {
+      console.error('❌ Revocation failed:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Revocation failed';
       
       if (errorMessage.includes('User rejected') || errorMessage.includes('user rejected')) {
         setError('Transaction cancelled by user');
