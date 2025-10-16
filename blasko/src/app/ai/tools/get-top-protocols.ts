@@ -50,7 +50,7 @@ export const getTopProtocolsTool = createTool({
           logo: p.logo || null,
           url: p.url || null,
         }))
-        .sort((a, b) => b.tvl - a.tvl)
+        .sort((a: { tvl: number }, b: { tvl: number }) => b.tvl - a.tvl)
         .slice(0, Math.min(Math.max(limit, 1), 20)); // Limit between 1-20
 
       return {
