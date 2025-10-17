@@ -82,11 +82,20 @@ export function RegisterBNS({
 
       console.log('Transaction payload:', payload);
 
+      // Validate payload
+      if (!payload.contractAddress || !payload.contractName || !payload.functionName) {
+        throw new Error('Invalid transaction payload from BNS SDK');
+      }
+
+      if (!payload.functionArgs || payload.functionArgs.length === 0) {
+        throw new Error('Missing function arguments');
+      }
+
       const response = await request('stx_callContract', {
         contract: `${payload.contractAddress}.${payload.contractName}` as `${string}.${string}`,
         functionName: payload.functionName,
         functionArgs: payload.functionArgs,
-        postConditionMode: 'allow',
+        postConditions: payload.postConditions || [],
         network: 'mainnet',
       });
 
@@ -96,10 +105,17 @@ export function RegisterBNS({
       console.error('❌ Registration failed:', err);
       const errorMessage = err instanceof Error ? err.message : 'Registration failed';
       
+      // Better error handling
       if (errorMessage.includes('User rejected') || errorMessage.includes('user rejected')) {
         setError('Transaction cancelled by user');
+      } else if (errorMessage.includes('transaction rejected')) {
+        setError('Transaction rejected by network. This might happen if: 1) The name is already taken, 2) Insufficient STX balance, or 3) Invalid transaction format. Please try again or contact support.');
+      } else if (errorMessage.includes('broadcast')) {
+        setError('Failed to broadcast transaction. Please check your wallet balance and network connection.');
+      } else if (errorMessage.includes('nonce')) {
+        setError('Transaction nonce error. Please try again in a few seconds.');
       } else {
-        setError(errorMessage);
+        setError(`Registration failed: ${errorMessage}`);
       }
     } finally {
       setLoading(false);
