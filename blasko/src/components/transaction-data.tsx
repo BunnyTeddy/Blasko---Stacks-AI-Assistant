@@ -130,28 +130,28 @@ export function TransactionData(props: TransactionDataProps) {
         )}
 
         {/* Additional transaction-specific data */}
-        {props.token_transfer && (
+        {props.token_transfer ? (
           <div className="p-3 bg-accent/30 rounded-lg space-y-2">
             <p className="text-sm font-medium">Token Transfer Details</p>
             <div className="text-sm space-y-1">
-              <p><span className="text-muted-foreground">To:</span> {props.token_transfer.recipient_address}</p>
-              <p><span className="text-muted-foreground">Amount:</span> {formatSTX(props.token_transfer.amount)} STX</p>
-              {props.token_transfer.memo && (
-                <p><span className="text-muted-foreground">Memo:</span> {Buffer.from(props.token_transfer.memo.slice(2), 'hex').toString()}</p>
-              )}
+              <p><span className="text-muted-foreground">To:</span> {String(props.token_transfer.recipient_address)}</p>
+              <p><span className="text-muted-foreground">Amount:</span> {formatSTX(String(props.token_transfer.amount))} STX</p>
+              {props.token_transfer.memo ? (
+                <p><span className="text-muted-foreground">Memo:</span> {Buffer.from(String(props.token_transfer.memo).slice(2), 'hex').toString()}</p>
+              ) : null}
             </div>
           </div>
-        )}
+        ) : null}
 
-        {props.contract_call && (
+        {props.contract_call ? (
           <div className="p-3 bg-accent/30 rounded-lg space-y-2">
             <p className="text-sm font-medium">Contract Call Details</p>
             <div className="text-sm space-y-1">
-              <p><span className="text-muted-foreground">Contract:</span> {props.contract_call.contract_id}</p>
-              <p><span className="text-muted-foreground">Function:</span> {props.contract_call.function_name}</p>
+              <p><span className="text-muted-foreground">Contract:</span> {String(props.contract_call.contract_id)}</p>
+              <p><span className="text-muted-foreground">Function:</span> {String(props.contract_call.function_name)}</p>
             </div>
           </div>
-        )}
+        ) : null}
       </CardContent>
     </Card>
   );
