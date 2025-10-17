@@ -62,8 +62,8 @@ export function StacksKnowledge({ question, answer, rawContent, sources }: Stack
 // Helper function to extract a readable summary from raw documentation content
 function extractSummary(rawContent: string): string {
   // Remove the instruction part if present
-  let content = rawContent.replace(/---\s*INSTRUCTION:.*$/s, '').trim();
-  content = content.replace(/^DOCUMENTATION CONTENT FOR.*?:\s*/s, '').trim();
+  let content = rawContent.replace(/---\s*INSTRUCTION:[\s\S]*$/, '').trim();
+  content = content.replace(/^DOCUMENTATION CONTENT FOR[\s\S]*?:\s*/, '').trim();
   
   // Take first few paragraphs (limit to ~800 chars for readability)
   const paragraphs = content.split('\n\n');

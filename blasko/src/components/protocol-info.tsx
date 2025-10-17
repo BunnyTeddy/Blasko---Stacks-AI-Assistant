@@ -247,7 +247,7 @@ export function ProtocolInfo({
                     borderRadius: '8px',
                   }}
                   labelStyle={{ color: '#f3f4f6' }}
-                  formatter={(value: number) => [formatCurrency(value), 'TVL']}
+                  formatter={(value: number | string) => [formatCurrency(value), 'TVL']}
                 />
                 <Line
                   type="monotone"

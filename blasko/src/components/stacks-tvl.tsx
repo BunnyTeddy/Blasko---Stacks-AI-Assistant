@@ -137,7 +137,7 @@ export function StacksTVL({
                   borderRadius: '8px',
                 }}
                 labelStyle={{ color: '#f3f4f6' }}
-                formatter={(value: number) => [formatCurrency(value), 'TVL']}
+                formatter={(value: number | string) => [formatCurrency(Number(value)), 'TVL']}
               />
               <Line
                 type="monotone"

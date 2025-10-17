@@ -16,6 +16,9 @@ type TransactionDataProps = {
   tx_result?: {
     repr: string;
   };
+  token_transfer?: Record<string, unknown>;
+  contract_call?: Record<string, unknown>;
+  smart_contract?: Record<string, unknown>;
 };
 
 export function TransactionData(props: TransactionDataProps) {

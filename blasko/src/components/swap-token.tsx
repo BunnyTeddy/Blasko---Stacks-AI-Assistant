@@ -48,20 +48,11 @@ export function SwapToken({
   // Initialize Velar SDK
   useEffect(() => {
     try {
-      // VelarSDK config with mainnet
-      const sdk = new VelarSDK({ network: 'mainnet' } as Record<string, unknown>);
+      const sdk = new VelarSDK();
       setVelarSDK(sdk);
-      console.log('✅ Velar SDK initialized with mainnet');
-    } catch (err: unknown) {
-      console.error('Failed to initialize Velar SDK with config:', err);
-      // Fallback: try without network parameter
-      try {
-        const sdk = new VelarSDK();
-        setVelarSDK(sdk);
-        console.log('✅ Velar SDK initialized (fallback, no config)');
-      } catch (fallbackErr) {
-        console.error('Failed to initialize Velar SDK at all:', fallbackErr);
-      }
+      console.log('✅ Velar SDK initialized');
+    } catch (err) {
+      console.error('Failed to initialize Velar SDK:', err);
     }
   }, []);
 
@@ -128,7 +119,7 @@ export function SwapToken({
         
         setAvailableTokens(sorted);
         console.log('✅ Loaded', sorted.length, 'tokens from Velar:', sorted.map(t => t.symbol).join(', '));
-      } catch (err: unknown) {
+      } catch (err) {
         console.error('Failed to fetch tokens from Velar:', err);
         // Fallback tokens with Velar-compatible addresses (all hardcoded tokens)
         setAvailableTokens([
@@ -190,7 +181,7 @@ export function SwapToken({
       
       console.log('✅ Swap instance created:', fromToken, '→', toToken);
       return instance;
-      } catch (err: unknown) {
+      } catch (err) {
       console.error('❌ Failed to create swap instance:', err);
       console.error('Error details:', {
         message: (err as Error).message,
@@ -287,19 +278,21 @@ export function SwapToken({
       
       // Extract amount from Velar response
       // AmountOutResponse has 'value' property
-      const outputAmount = (amountOut as Record<string, unknown>).amountOutDecimal || amountOut.value || (amountOut as Record<string, unknown>).amountOut || 0;
+      const amountOutRecord = amountOut as unknown as Record<string, unknown>;
+      const outputAmount = amountOutRecord.amountOutDecimal || amountOut.value || amountOutRecord.amountOut || 0;
       setToAmount(Number(outputAmount).toFixed(6));
       
       // Calculate price impact (estimate)
       const impact = Math.min((parseFloat(fromAmount) / 1000) * Math.random(), 3);
           setPriceImpact(impact.toFixed(2));
           
-    } catch (err: Record<string, unknown>) {
+    } catch (err: unknown) {
       console.error('Failed to get quote from Velar:', err);
+      const errorMessage = err instanceof Error ? err.message : '';
       
-      if (err.message?.includes('No pool') || err.message?.includes('no route')) {
+      if (errorMessage.includes('No pool') || errorMessage.includes('no route')) {
             setError(`No liquidity pool available for ${fromToken}/${toToken} pair`);
-      } else if (err.message?.includes('network') || err.message?.includes('fetch')) {
+      } else if (errorMessage.includes('network') || errorMessage.includes('fetch')) {
             setError('Network error. Please check your connection and try again.');
       } else {
         setError('Failed to get price quote. Please try again.');
@@ -363,13 +356,13 @@ export function SwapToken({
       
       // Execute swap via Stacks wallet
       // openContractCall expects specific network type
-      const options: Record<string, unknown> = {
+      await openContractCall({
         ...swapTx,
-            network: 'mainnet',
+        network: 'mainnet' as const,
         anchorMode: AnchorMode.Any,
         onFinish: (data: Record<string, unknown>) => {
           console.log('✅ Velar swap successful:', data.txId);
-          setTxId(data.txId);
+          setTxId(String(data.txId || ''));
           setLoading(false);
         },
         onCancel: () => {
@@ -377,14 +370,12 @@ export function SwapToken({
             setError('Transaction cancelled by user');
           setLoading(false);
         },
-      };
+      } as never);
       
-      await openContractCall(options);
-      
-    } catch (err: Record<string, unknown>) {
+    } catch (err: unknown) {
       console.error('❌ Velar swap failed:', err);
       
-      const errorMessage = err.message || 'Swap failed';
+      const errorMessage = err instanceof Error ? err.message : 'Swap failed';
       
       if (errorMessage.includes('User rejected') || errorMessage.includes('user rejected')) {
         setError('Transaction cancelled by user');

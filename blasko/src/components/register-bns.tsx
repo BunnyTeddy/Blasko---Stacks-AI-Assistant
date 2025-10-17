@@ -92,7 +92,7 @@ export function RegisterBNS({
 
       setTxId(response.txid || null);
       console.log('✅ Registration submitted:', response.txid);
-    } catch (err: unknown) {
+    } catch (err) {
       console.error('❌ Registration failed:', err);
       const errorMessage = err instanceof Error ? err.message : 'Registration failed';
       

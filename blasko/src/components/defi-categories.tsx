@@ -63,14 +63,14 @@ export function DefiCategories({
   }));
 
   // Custom tooltip component
-  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ name: string; value: number }> }) => {
-    if (active && payload && payload.length) {
-      const data = payload[0];
-      const percentage = ((data.value / totalTVL) * 100).toFixed(2);
+  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<Record<string, unknown>> }) => {
+    if (active && payload && Array.isArray(payload) && payload.length > 0) {
+      const data = payload[0] as Record<string, unknown>;
+      const percentage = ((Number(data.value) / totalTVL) * 100).toFixed(2);
       return (
         <div className="bg-gray-900 border border-gray-700 rounded-lg p-3 shadow-xl">
-          <p className="text-white font-semibold mb-1">{data.name}</p>
-          <p className="text-gray-300 text-sm">TVL: {formatCurrency(data.value)}</p>
+          <p className="text-white font-semibold mb-1">{String(data.name)}</p>
+          <p className="text-gray-300 text-sm">TVL: {formatCurrency(Number(data.value))}</p>
           <p className="text-gray-400 text-xs mt-1">{percentage}% of total</p>
         </div>
       );

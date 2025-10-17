@@ -120,52 +120,48 @@ export function ContractData(props: ContractDataProps) {
             <CollapsibleContent className="mt-2">
               <ScrollArea className="h-96 w-full">
                 <div className="space-y-3">
-                  {props.abi && (
-                    <>
-                      {/* Functions */}
-                      {Array.isArray((props.abi as { functions?: unknown[] }).functions) && (props.abi as { functions: Array<Record<string, unknown>> }).functions.length > 0 && (
-                        <div className="space-y-2">
-                          <p className="text-sm font-semibold text-muted-foreground">Functions</p>
-                          {(props.abi as { functions: Array<Record<string, unknown>> }).functions.map((func, idx) => (
-                            <div key={idx} className="p-3 bg-muted rounded text-xs space-y-1">
-                              <p className="font-mono font-medium">{String(func.name)}</p>
-                              <p className="text-muted-foreground">{String(func.access)}</p>
-                              {Array.isArray(func.args) && (func.args as Array<Record<string, unknown>>).length > 0 && (
-                                <p className="text-muted-foreground">
-                                  Args: {(func.args as Array<Record<string, unknown>>).map((arg) => String(arg.name)).join(', ')}
-                                </p>
-                              )}
-                            </div>
-                          ))}
+                  {/* Functions */}
+                  {props.abi?.functions && Array.isArray(props.abi.functions) && props.abi.functions.length > 0 ? (
+                    <div className="space-y-2">
+                      <p className="text-sm font-semibold text-muted-foreground">Functions</p>
+                      {(props.abi.functions as Array<Record<string, unknown>>).map((func: Record<string, unknown>, idx: number) => (
+                        <div key={idx} className="p-3 bg-muted rounded text-xs space-y-1">
+                          <p className="font-mono font-medium">{String(func.name)}</p>
+                          <p className="text-muted-foreground">{String(func.access)}</p>
+                          {Array.isArray(func.args) && func.args.length > 0 && (
+                            <p className="text-muted-foreground">
+                              Args: {(func.args as Array<Record<string, unknown>>).map((arg: Record<string, unknown>) => String(arg.name)).join(', ')}
+                            </p>
+                          )}
                         </div>
-                      )}
+                      ))}
+                    </div>
+                  ) : null}
 
-                      {/* Variables */}
-                      {Array.isArray((props.abi as { variables?: unknown[] }).variables) && (props.abi as { variables: Array<Record<string, unknown>> }).variables.length > 0 && (
-                        <div className="space-y-2">
-                          <p className="text-sm font-semibold text-muted-foreground">Variables</p>
-                          {(props.abi as { variables: Array<Record<string, unknown>> }).variables.map((variable, idx) => (
-                            <div key={idx} className="p-3 bg-muted rounded text-xs">
-                              <p className="font-mono">{String(variable.name)}</p>
-                              <p className="text-muted-foreground">{String(variable.type)}</p>
-                            </div>
-                          ))}
+                  {/* Variables */}
+                  {props.abi?.variables && Array.isArray(props.abi.variables) && props.abi.variables.length > 0 ? (
+                    <div className="space-y-2">
+                      <p className="text-sm font-semibold text-muted-foreground">Variables</p>
+                      {(props.abi.variables as Array<Record<string, unknown>>).map((variable: Record<string, unknown>, idx: number) => (
+                        <div key={idx} className="p-3 bg-muted rounded text-xs">
+                          <p className="font-mono">{String(variable.name)}</p>
+                          <p className="text-muted-foreground">{String(variable.type)}</p>
                         </div>
-                      )}
-                    </>
-                  )}
+                      ))}
+                    </div>
+                  ) : null}
 
                   {/* Maps */}
-                  {props.abi && Array.isArray((props.abi as { maps?: unknown[] }).maps) && (props.abi as { maps: Array<Record<string, unknown>> }).maps.length > 0 && (
+                  {props.abi?.maps && Array.isArray(props.abi.maps) && props.abi.maps.length > 0 ? (
                     <div className="space-y-2">
                       <p className="text-sm font-semibold text-muted-foreground">Maps</p>
-                      {(props.abi as { maps: Array<Record<string, unknown>> }).maps.map((map, idx) => (
+                      {(props.abi.maps as Array<Record<string, unknown>>).map((map: Record<string, unknown>, idx: number) => (
                         <div key={idx} className="p-3 bg-muted rounded text-xs">
                           <p className="font-mono">{String(map.name)}</p>
                         </div>
                       ))}
                     </div>
-                  )}
+                  ) : null}
                 </div>
               </ScrollArea>
             </CollapsibleContent>

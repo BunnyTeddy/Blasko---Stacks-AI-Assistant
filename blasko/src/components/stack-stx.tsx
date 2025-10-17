@@ -142,11 +142,12 @@ export function StackStx({
         if (txResponse.ok) {
           const txData = await txResponse.json();
           // Check if there's a recent successful delegate-stx transaction
-          hasPendingDelegation = txData.results?.some((tx: Record<string, unknown>) => 
-            tx.tx_status === 'success' && 
-            tx.tx_type === 'contract_call' &&
-            (tx.contract_call as Record<string, unknown> | undefined)?.function_name === 'delegate-stx'
-          ) || false;
+          hasPendingDelegation = Array.isArray(txData.results) && txData.results.some((tx: Record<string, unknown>) => {
+            const contractCall = tx.contract_call as Record<string, unknown> | undefined;
+            return tx.tx_status === 'success' && 
+              tx.tx_type === 'contract_call' &&
+              contractCall?.function_name === 'delegate-stx';
+          }) || false;
           
           if (hasPendingDelegation) {
             console.log('✅ Found pending delegation transaction');
@@ -184,7 +185,8 @@ export function StackStx({
   const calculateEstimatedRewards = () => {
     if (!amount || !poxInfo) return '0';
     const amountNum = parseFloat(amount);
-    const totalStacked = (poxInfo.current_cycle as Record<string, unknown> | undefined)?.stacked_ustx as number || 1;
+    const currentCycle = poxInfo.current_cycle as Record<string, unknown> | undefined;
+    const totalStacked = (currentCycle?.stacked_ustx as number) || 1;
     const userShare = (amountNum * 1e6) / totalStacked;
     // Rough estimate: ~900 BTC distributed per year across all stackers
     const annualBtc = 900;
@@ -402,8 +404,10 @@ export function StackStx({
   };
 
   const getUnlockDate = () => {
-    if (!(poxInfo?.current_cycle as Record<string, unknown> | undefined)?.id) return 'N/A';
-    const unlockCycle = Number((poxInfo.current_cycle as Record<string, unknown>).id) + lockPeriod + 1;
+    const currentCycle = poxInfo?.current_cycle as Record<string, unknown> | undefined;
+    if (!currentCycle?.id) return 'N/A';
+    const cycleId = Number(currentCycle.id);
+    const unlockCycle = cycleId + lockPeriod + 1;
     const daysUntilUnlock = lockPeriod * 14; // ~2 weeks per cycle
     const unlockDate = new Date();
     unlockDate.setDate(unlockDate.getDate() + daysUntilUnlock);
@@ -484,7 +488,7 @@ export function StackStx({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as Record<string, unknown>)}>
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'solo' | 'pool' | 'dashboard')}>
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="solo">
               <Lock className="h-4 w-4 mr-2" />
@@ -518,7 +522,7 @@ export function StackStx({
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-3 bg-gray-50 rounded-lg">
                   <p className="text-xs text-gray-500">Current Cycle</p>
-                  <p className="text-lg font-semibold">{(poxInfo.current_cycle as Record<string, unknown> | undefined)?.id || 'N/A'}</p>
+                  <p className="text-lg font-semibold">{String((poxInfo.current_cycle as Record<string, unknown> | undefined)?.id || 'N/A')}</p>
                 </div>
                 <div className="p-3 bg-gray-50 rounded-lg">
                   <p className="text-xs text-gray-500">Minimum STX</p>
@@ -623,18 +627,18 @@ export function StackStx({
 
           {/* Pool Stacking */}
           <TabsContent value="pool" className="space-y-4">
-            {stackingStatus?.locked_balance && parseInt(stackingStatus.locked_balance) > 0 && (
+            {stackingStatus?.locked_balance && parseInt(String(stackingStatus.locked_balance)) > 0 ? (
               <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                 <div className="flex items-start gap-2">
                   <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
                   <div className="space-y-1 text-sm text-gray-700">
                     <p><strong>Already Delegating:</strong></p>
-                    <p>You have {(parseInt(stackingStatus.locked_balance) / 1e6).toLocaleString()} STX already delegated to a pool. 
+                    <p>You have {(parseInt(String(stackingStatus.locked_balance)) / 1e6).toLocaleString()} STX already delegated to a pool. 
                     To change pools or amounts, please revoke your current delegation first from the Dashboard tab.</p>
                   </div>
                 </div>
               </div>
-            )}
+            ) : null}
             
             <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
               <div className="flex items-start gap-2">
@@ -733,7 +737,7 @@ export function StackStx({
               disabled={
                 loading || 
                 !walletConnected || 
-                (stackingStatus?.locked_balance && parseInt(stackingStatus.locked_balance) > 0)
+                Boolean(stackingStatus?.locked_balance && parseInt(String(stackingStatus.locked_balance)) > 0)
               }
               className="w-full"
               size="lg"
@@ -746,7 +750,7 @@ export function StackStx({
               ) : (
                 <>
                   <Users className="mr-2 h-4 w-4" />
-                  {stackingStatus?.locked_balance && parseInt(stackingStatus.locked_balance) > 0 
+                  {stackingStatus?.locked_balance && parseInt(String(stackingStatus.locked_balance)) > 0 
                     ? 'Already Delegating' 
                     : 'Delegate to Pool'}
                 </>
@@ -770,9 +774,9 @@ export function StackStx({
                     </p>
                     <p className="text-2xl font-bold text-blue-600">
                       {stackingStatus.stacked ? 
-                        `${(parseInt(stackingStatus.stacked) / 1e6).toLocaleString()} STX` : 
-                        stackingStatus.locked_balance && parseInt(stackingStatus.locked_balance) > 0 ?
-                          `${(parseInt(stackingStatus.locked_balance) / 1e6).toLocaleString()} STX` :
+                        `${(parseInt(String(stackingStatus.stacked)) / 1e6).toLocaleString()} STX` : 
+                        stackingStatus.locked_balance && parseInt(String(stackingStatus.locked_balance)) > 0 ?
+                          `${(parseInt(String(stackingStatus.locked_balance)) / 1e6).toLocaleString()} STX` :
                           '0 STX'}
                     </p>
                   </div>
@@ -784,7 +788,7 @@ export function StackStx({
                   </div>
                 </div>
 
-                {(stackingStatus.stacked || (stackingStatus.locked_balance && parseInt(stackingStatus.locked_balance) > 0)) ? (
+                {(stackingStatus.stacked || (stackingStatus.locked_balance && parseInt(String(stackingStatus.locked_balance)) > 0)) ? (
                   <div className="p-4 border rounded-lg space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-600">Status</span>
@@ -798,23 +802,23 @@ export function StackStx({
                         {stackingStatus.stacked ? 'Direct Stacking' : 'Delegated to Pool'}
                       </span>
                     </div>
-                    {stackingStatus.burnchain_unlock_height && (
+                    {stackingStatus.burnchain_unlock_height ? (
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-gray-600">Unlock Height</span>
                         <span className="text-sm font-medium">
-                          {stackingStatus.burnchain_unlock_height}
+                          {String(stackingStatus.burnchain_unlock_height)}
                         </span>
                       </div>
-                    )}
-                    {stackingStatus.pox_address && (
+                    ) : null}
+                    {stackingStatus.pox_address ? (
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-gray-600">BTC Address</span>
                         <span className="text-sm font-mono">
-                          {stackingStatus.pox_address.slice(0, 10)}...
+                          {String(stackingStatus.pox_address).slice(0, 10)}...
                         </span>
                       </div>
-                    )}
-                    {!stackingStatus.stacked && stackingStatus.locked_balance && parseInt(stackingStatus.locked_balance) > 0 && (
+                    ) : null}
+                    {!stackingStatus.stacked && stackingStatus.locked_balance && parseInt(String(stackingStatus.locked_balance)) > 0 ? (
                       <>
                         <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg mt-3">
                           <p className="text-xs text-gray-600">
@@ -839,7 +843,7 @@ export function StackStx({
                           )}
                         </Button>
                       </>
-                    )}
+                    ) : null}
                   </div>
                 ) : stackingStatus?.has_pending_delegation ? (
                   <div className="space-y-4">
@@ -891,12 +895,12 @@ export function StackStx({
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Current Cycle</span>
-                        <span className="font-medium">{(poxInfo.current_cycle as Record<string, unknown> | undefined)?.id || 'N/A'}</span>
+                        <span className="font-medium">{String((poxInfo.current_cycle as Record<string, unknown> | undefined)?.id || 'N/A')}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Total Stacked</span>
                         <span className="font-medium">
-                          {poxInfo.current_cycle?.stacked_ustx ? 
+                          {(poxInfo.current_cycle as Record<string, unknown> | undefined)?.stacked_ustx ? 
                             `${(parseInt(String((poxInfo.current_cycle as Record<string, unknown>).stacked_ustx)) / 1e6 / 1e6).toFixed(1)}M STX` : 
                             'N/A'}
                         </span>

@@ -147,7 +147,7 @@ export function MultiSend(props: MultiSendProps) {
       setShowCsvInput(false);
       setError(null);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'CSV parsing failed');
+      setError(err instanceof Error ? err.message : 'Failed to parse CSV');
     }
   };
 
@@ -201,11 +201,11 @@ export function MultiSend(props: MultiSendProps) {
       setTxId(response.txid || null);
     } catch (err: unknown) {
       console.error('Multi-send error:', err);
-      const errorMessage = err instanceof Error ? err.message : String(err);
+      const errorMessage = err instanceof Error ? err.message : 'Failed to send transaction';
       if (errorMessage.includes('User rejected')) {
         setError('Transaction cancelled by user');
       } else {
-        setError(errorMessage || 'Failed to send transaction');
+        setError(errorMessage);
       }
     } finally {
       setIsSubmitting(false);
